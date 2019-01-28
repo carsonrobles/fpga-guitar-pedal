@@ -12,41 +12,16 @@ module i2s #(
   axis_if.master axis_rx,
   axis_if.slave  axis_tx,
 
-  output wire    mclk,
-  output wire    lrck,
-  output wire    sclk,
+  input  wire    mclk,
+  input  wire    lrck,
+  input  wire    sclk,
   input  wire    sdi,
   output wire    sdo
 );
 
-
-  // TODO (carson): generate mclk
-  assign mclk = clk;
-
-
-  // counter for creating sclk
-  logic [2:0] sclk_cnt = '0;
-
-  // increment sclk_cnt every cycle of mclk
-  always_ff @ (posedge mclk) begin
-    sclk_cnt <= (rst) ? '0 : sclk_cnt + 1;
-  end
-
-  // toggle sclk whenever sclk_cnt is full
-  always_ff @ (posedge mclk) begin
-    if (&sclk_cnt) sclk <= ~sclk;
-  end
-
-
-  // increment lrck_cnt every cycle of mclk
-  always_ff @ (posedge mclk) begin
-    lrck_cnt <= (rst) ? '0 : lrck_cnt + 1;
-  end
-
-  // toggle lrck whenever lrck_cnt is full
-  always_ff @ (posedge mclk) begin
-    if (&lrck_cnt) lrck <= ~lrck;
-  end
+  
+  // TEMP (carson): using this to test pass through
+  assign sdo = sdi;
 
 
   // i2s receive
@@ -72,7 +47,7 @@ module i2s #(
     .mclk    (mclk),
     .lrck    (lrck),
     .sclk    (sclk),
-    .sdo     (sdo)
+    .sdo     ( )//(sdo)
   );
 
 
