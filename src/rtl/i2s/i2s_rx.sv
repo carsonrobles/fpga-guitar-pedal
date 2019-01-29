@@ -29,22 +29,13 @@ module i2s_rx #(
   end
 
 
-  // 1 sclk period delayed lrck
-  logic lrck_z = 0;
-
-  always_ff @ (posedge mclk) begin
-    if (rst)            lrck_z <= 0;
-    else if (sclk_edge) lrck_z <= lrck;
-  end
-
-
   // left channel
   logic [31:0] data_lc = '0;
 
   // shift in data on rising edge of sclk
   always_ff @ (posedge mclk) begin
-    if (rst)                      data_lc <= '0;
-    else if (sclk_edge & ~lrck/*_z*/) data_lc <= (data_lc << 1) | sdi;
+    if (rst)                    data_lc <= '0;
+    else if (sclk_edge & ~lrck) data_lc <= (data_lc << 1) | sdi;
   end
 
   // right channel
@@ -52,19 +43,19 @@ module i2s_rx #(
 
   // shift in data on rising edge of sclk
   always_ff @ (posedge mclk) begin
-    if (rst)                     data_rc <= '0;
-    else if (sclk_edge & lrck/*_z*/) data_rc <= (data_rc << 1) | sdi;
+    if (rst)                   data_rc <= '0;
+    else if (sclk_edge & lrck) data_rc <= (data_rc << 1) | sdi;
   end
 
 
-  // valid when left data gathered
+  // valid when left and right data gathered
   logic [5:0] bcnt = '0;
 
-  wire data_vld = (sclk_edge & !bcnt);//(bcnt == 64));
+  wire data_vld = (sclk_edge & !bcnt);
 
   always_ff @ (posedge mclk) begin
-    //if (rst | data_vld) bcnt <= '0;
-    /*else     */bcnt <= bcnt + sclk_edge;
+    if (rst) bcnt <= '0;
+    else     bcnt <= bcnt + sclk_edge;
   end
 
   always_ff @ (posedge mclk) begin
@@ -75,9 +66,7 @@ module i2s_rx #(
   end
 
 
-  //always_comb axis_rx.data.lc = data_lc[31:8];
-  //always_comb axis_rx.data.rc = data_rc[31:8];
-
+  // register output data when valid
   always_ff @ (posedge mclk) begin
     if (rst) begin
       axis_rx.data.lc <= '0;
