@@ -6,3 +6,5 @@ __pycache__
 *.sim
 *.jou
 *.log
+.Xil
+*.str

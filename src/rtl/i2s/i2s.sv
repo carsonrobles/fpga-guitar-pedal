@@ -21,7 +21,7 @@ module i2s #(
 
   
   // TEMP (carson): using this to test pass through
-  assign sdo = sdi;
+  //assign sdo = (lrck) ? sdi : 0;
 
 
   // i2s receive
@@ -47,7 +47,7 @@ module i2s #(
     .mclk    (mclk),
     .lrck    (lrck),
     .sclk    (sclk),
-    .sdo     ( )//(sdo)
+    .sdo     (sdo)
   );
 
 
