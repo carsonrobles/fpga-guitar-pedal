@@ -7,10 +7,6 @@ import audio
 import effects
 
 
-def sinusoid(amp: float, freq: float, phs: float, fs: float, duration: float) -> list:
-  return amp*np.sin(2*np.pi*np.arange(fs*duration)*(freq/fs)+phs).astype(np.float32)
-
-
 def plot_io(xn: list, yn: list, n: int = -1):
   f, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, sharex='col', sharey='row')
 
