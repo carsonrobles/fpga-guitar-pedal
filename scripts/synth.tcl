@@ -3,10 +3,12 @@ set part      [lindex $argv 0]
 set module    [lindex $argv 1]
 set constr    [lindex $argv 2]
 set vsrc      [lindex $argv 3]
-set output    [lindex $argv 4]
+set ips       [lindex $argv 4]
+set output    [lindex $argv 5]
 
 create_project $module -in_memory -part $part
 add_files $vsrc
+read_ip $ips
 read_xdc $constr
 
 synth_design -name $module -top $module -part $part

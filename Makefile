@@ -2,8 +2,9 @@ PROJ_PATH = /home/carson/poly/senior_project/fpga-guitar-pedal
 PART      = xc7a100tcsg324-1
 
 CONSTR    = $(PROJ_PATH)/src/xdc/constraints.xdc
-HDR       = $(wildcard $(PROJ_PATH)/src/rtl/*/*.svh)
+HDR       = $(wildcard $(PROJ_PATH)/src/rtl/*.svh $(PROJ_PATH)/src/rtl/*/*.svh)
 SRC       = $(wildcard $(PROJ_PATH)/src/rtl/*.sv $(PROJ_PATH)/src/rtl/*/*.sv)
+IP        = $(wildcard $(PROJ_PATH)/src/ip/*/*.xci)
 #TB        = $(PROJ_PATH)/sim/top_tb.sv
 
 TOP       = top
@@ -40,9 +41,10 @@ $(SYNTH_DCP): $(PROJ_PATH)/scripts/synth.tcl Makefile $(CONSTR) $(HDR) $(SRC)
 	#   1: top level module name
 	#   2: constraints file
 	#   3: sources
-	#   4: output dcp file name
+	#   4: ips
+	#   5: output dcp file name
 	vivado -nojournal -log $(PROJ_PATH)/fab/synth.log -mode batch \
-		-source $< -tclargs $(PART) $(TOP) $(CONSTR) "$(HDR) $(SRC)" $@
+		-source $< -tclargs $(PART) $(TOP) $(CONSTR) "$(HDR) $(SRC)" "$(IP)" $@
 
 # place
 $(PLACE_DCP): $(PROJ_PATH)/scripts/place.tcl Makefile $(SYNTH_DCP)

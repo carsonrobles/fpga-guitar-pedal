@@ -8,3 +8,6 @@ __pycache__
 *.log
 .Xil
 *.str
+usage_statistics_webtalk.*
+*.bit
+*.dcp
