@@ -24,6 +24,17 @@ module top (
 
 
   wire mclk;
+
+  // synchronize reset
+  logic [1:0] rst_sync;
+
+  always_ff @ (posedge mclk) begin
+    rst_sync <= (rst_sync << 1) | ~FPGA_RST_N;
+  end
+
+  wire rst = rst_sync[1];
+
+
   wire lrck;
   wire sclk;
 
@@ -36,29 +47,27 @@ module top (
     .sclk (sclk)
   );
 
-  axis_if #( .DATA_TYPE (sample_pkg::sample_t) ) axis_pt ();    // pass through stream
+  //axis_if #( .DATA_TYPE (sample_pkg::sample_t) ) axis_pt ();    // pass through stream
+
+  sample_pkg::sample_t data;
+  wire                 vld;
 
   // i2s communication
-  i2s #(
-    .DATA_WIDTH (24)    // 24 bit audio samples
-  ) i2s_i (
+  i2s i2s_i (
     .clk     (FPGA_CLK_100),
     .rst     (~FPGA_RST_N),
-    .axis_rx (axis_pt),
-    .axis_tx (axis_pt),
+    //.axis_rx (axis_pt),
+    //.axis_tx (axis_pt),
+    .rx_data (data),
+    .rx_vld  (vld),
+    .tx_data (data),
+    .tx_vld  (vld),
     .mclk    (mclk),
     .lrck    (lrck),
     .sclk    (sclk),
     .sdi     (JA_SDI_RX),
     .sdo     (JA_SDO_TX)
   );
-
-
-  /*axis_i2s2 (
-    .axis_clk (mclk),
-    .axis_resetn (FPGA_RST_N),
-    .tx_axis_s_data (axis_pt.data.lc)
-  );*/
 
   // assign PMOD clock outputs
   assign JA_MCLK_TX = mclk;

@@ -9,8 +9,8 @@ module i2s_tb;
   logic clk = 1;
   logic rst = 0;
 
-  axis_if #( .DATA_TYPE (sample_pkg::sample_t) ) axis_rx ();    // input axi stream
-  axis_if #( .DATA_TYPE (sample_pkg::sample_t) ) axis_tx ();    // output axi stream
+  //axis_if #( .DATA_TYPE (sample_pkg::sample_t) ) axis_rx ();    // input axi stream
+  //axis_if #( .DATA_TYPE (sample_pkg::sample_t) ) axis_tx ();    // output axi stream
 
   // serial interface
   wire  mclk;
@@ -33,14 +33,21 @@ module i2s_tb;
     .sclk (sclk)
   );
 
+  sample_pkg::sample_t data;
+  wire                 vld;
+
   // instantiate I2S core
   i2s #(
     .DATA_WIDTH (24)      // 24-bit samples
   ) dut (
     .clk     (clk),
     .rst     (rst),
-    .axis_rx (axis_rx),
-    .axis_tx (axis_rx),
+    //.axis_rx (axis_rx),
+    //.axis_tx (axis_rx),
+    .rx_data (data),
+    .rx_vld  (vld),
+    .tx_data (data),
+    .tx_vld  (vld),
     .mclk    (mclk),
     .lrck    (lrck),
     .sclk    (sclk),
