@@ -5,8 +5,8 @@ package sample_pkg;
 
 
   typedef struct {
-    logic [23:0] lc;    // left channel data
-    logic [23:0] rc;    // right channel data
+    logic signed [23:0] lc;    // left channel data
+    logic signed [23:0] rc;    // right channel data
   } sample_t;
 
 

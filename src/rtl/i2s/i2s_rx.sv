@@ -80,7 +80,7 @@ module i2s_rx (
       data.rc <= '0;
     end else if (data_vld) begin
       data.lc <= data_lc[31:8];
-      data.rc <= data_rc[31:8]
+      data.rc <= data_rc[31:8];
     end
   end
 
