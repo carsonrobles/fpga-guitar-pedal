@@ -47,8 +47,6 @@ module top (
     .sclk (sclk)
   );
 
-  //axis_if #( .DATA_TYPE (sample_pkg::sample_t) ) axis_pt ();    // pass through stream
-
   sample_pkg::sample_t data;
   wire                 vld;
 
@@ -56,12 +54,10 @@ module top (
   i2s i2s_i (
     .clk     (FPGA_CLK_100),
     .rst     (~FPGA_RST_N),
-    //.axis_rx (axis_pt),
-    //.axis_tx (axis_pt),
-    .rx_data (data),
-    .rx_vld  (vld),
-    .tx_data (data),
-    .tx_vld  (vld),
+    .rx_data (rx_data),
+    .rx_vld  (rx_vld),
+    .tx_data (rx_data),
+    .tx_vld  (rx_vld),
     .mclk    (mclk),
     .lrck    (lrck),
     .sclk    (sclk),
@@ -76,6 +72,19 @@ module top (
   assign JA_MCLK_RX = mclk;
   assign JA_LRCK_RX = lrck;
   assign JA_SCLK_RX = sclk;
+
+
+  // effects pipe
+  eff_pipe eff_pipe_i (
+    .clk    (mclk),
+    .rst    (~FPGA_RST_N),
+    .en     (eff_en),
+    .sel    (SW),
+    .data_i (rx_data),
+    .vld_i  (rx_vld),
+    .data_o (tx_data),
+    .vld_o  (tx_vld)
+  );
 
 
   // leds follow switches
