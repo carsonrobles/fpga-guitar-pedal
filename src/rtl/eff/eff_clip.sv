@@ -4,7 +4,8 @@
 `include "sample_pkg.svh"
 
 module eff_clip #(
-  parameter int DATA_WIDTH = 8
+  parameter int DATA_WIDTH = 8,
+  parameter int THRESHOLD  = 1050000
 ) (
   input  wire                   clk,
   input  wire                   rst,
@@ -22,14 +23,21 @@ module eff_clip #(
   logic signed [DATA_WIDTH-1:0] data_eff [3] = '{default:'0};
   logic        [           2:0] vld_eff      = '0;
 
+  logic        [           1:0] gain         = '0;
+
+  always_ff @ (posedge clk) begin
+    if (rst | ~en) gain <= '0;
+    else           gain <= 2'd2;
+  end
+
   always_ff @ (posedge clk) begin
     data_eff[0] <= data_i;
-    data_eff[1] <= data_eff[0] << 1;      // apply gain of 2
+    data_eff[1] <= data_eff[0] << gain;
 
-    if (data_eff[1] > 200)//1048576)
-      data_eff[2] <= 200;//1048576;
-    else if (data_eff[1] < -200)//-1048576)
-      data_eff[2] <= -200;//-1048576;
+    if (data_eff[1] > THRESHOLD)
+      data_eff[2] <= THRESHOLD;
+    else if (data_eff[1] < -1*THRESHOLD)
+      data_eff[2] <= -1*THRESHOLD;
     else
       data_eff[2] <= data_eff[1];
   end
