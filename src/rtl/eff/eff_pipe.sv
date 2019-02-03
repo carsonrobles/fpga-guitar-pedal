@@ -18,10 +18,26 @@ module eff_pipe (
 );
 
 
+  sample_pkg::sample_t data_eff;
+  wire                 vld_eff;
+
   always_comb begin
-    data_o = data_i;
-    vld_o  = vld_i;
+    data_o = (en) ? data_eff : data_i;
+    vld_o  = (en) ? vld_eff  : vld_i;
   end
+
+
+  eff_clip #(
+    .DATA_WIDTH ($bits(data_i.lc))
+  ) eff_clip_i (
+    .clk    (clk),
+    .rst    (rst),
+    .en     (sel[0]),
+    .data_i (data_i.lc),
+    .vld_i  (vld_i),
+    .data_o (data_eff.lc),
+    .vld_o  (vld_eff)
+  );
 
 
 endmodule
