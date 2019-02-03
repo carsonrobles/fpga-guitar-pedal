@@ -23,15 +23,12 @@ module i2s_tb;
   // run clock with period 5ns (100MHz)
   always_latch clk <= #5 ~clk;
 
-
-  // instantiate I2S clock generator module
-  i2s_clks i2s_clks_i (
+  mclk_gen mclk_gen_i (
     .clk  (clk),
     .rst  (rst),
-    .mclk (mclk),
-    .lrck (lrck),
-    .sclk (sclk)
+    .mclk (mclk)
   );
+
 
   sample_pkg::sample_t data;
   wire                 vld;
@@ -40,15 +37,12 @@ module i2s_tb;
   i2s #(
     .DATA_WIDTH (24)      // 24-bit samples
   ) dut (
-    .clk     (clk),
+    .mclk    (mclk),
     .rst     (rst),
-    //.axis_rx (axis_rx),
-    //.axis_tx (axis_rx),
     .rx_data (data),
     .rx_vld  (vld),
     .tx_data (data),
     .tx_vld  (vld),
-    .mclk    (mclk),
     .lrck    (lrck),
     .sclk    (sclk),
     .sdi     (sdi),
@@ -56,313 +50,27 @@ module i2s_tb;
   );
 
 
-  // rx
-  //always_comb axis_rx.rdy = 1;
-
   initial begin
-    repeat (10) begin
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 1;
+    repeat (100) begin
+      sdi <= 1;
+      @ (negedge sclk);
+      sdi <= 0;
+      @ (negedge sclk);
+      sdi <= 1;
+      @ (negedge sclk);
+      sdi <= 0;
+      @ (negedge sclk);
 
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 0;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 1;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
+      sdi <= 0;
+      @ (negedge sclk);
+      sdi <= 1;
+      @ (negedge sclk);
+      sdi <= 0;
+      @ (negedge sclk);
+      sdi <= 1;
+      @ (negedge sclk);
     end
-
-
-
-
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 1;
-
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 0;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-
-    @ (negedge sclk);
-    sdi <= 1;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 0;
-    @ (negedge sclk);
-    sdi <= 1;
   end
-
-  /*
-  // tx
-  initial     axis_tx.data = $random();
-
-  logic [4:0] vcnt = '0;
-
-  always_ff @ (posedge sclk) begin
-    vcnt <= vcnt + 1;
-  end
-
-  logic [1:0] sft = '0;
-  always_ff @ (posedge mclk)
-    sft <= (sft << 1) | sclk;
-
-  always_ff @ (posedge mclk) begin
-    if (&vcnt && (~sft[1] & sft[0]))
-      axis_tx.vld <= 1;
-    else
-      axis_tx.vld <= 0;
-  end
-
-  always_ff @ (posedge clk) begin
-    if (axis_tx.ok)
-      axis_tx.data = $random();
-  end*/
 
 
 endmodule

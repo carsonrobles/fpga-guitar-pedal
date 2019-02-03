@@ -25,7 +25,14 @@ module top (
 
   wire mclk;
 
-  // synchronize reset
+  mclk_gen mclk_gen_i (
+    .clk  (FPGA_CLK_100),
+    .rst  (~FPGA_RST_N),
+    .mclk (mclk)
+  );
+
+
+  // TODO (carson): synchronize reset
   logic [1:0] rst_sync;
 
   always_ff @ (posedge mclk) begin
@@ -38,15 +45,6 @@ module top (
   wire lrck;
   wire sclk;
 
-  // i2s clock generator
-  i2s_clks i2s_clks_i (
-    .clk  (FPGA_CLK_100),
-    .rst  (~FPGA_RST_N),
-    .mclk (mclk),
-    .lrck (lrck),
-    .sclk (sclk)
-  );
-
   sample_pkg::sample_t rx_data;
   wire                 rx_vld;
   sample_pkg::sample_t tx_data;
@@ -54,13 +52,12 @@ module top (
 
   // i2s communication
   i2s i2s_i (
-    .clk     (FPGA_CLK_100),
+    .mclk    (mclk),
     .rst     (~FPGA_RST_N),
     .rx_data (rx_data),
     .rx_vld  (rx_vld),
     .tx_data (tx_data),
     .tx_vld  (tx_vld),
-    .mclk    (mclk),
     .lrck    (lrck),
     .sclk    (sclk),
     .sdi     (JA_SDI_RX),
