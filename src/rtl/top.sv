@@ -32,14 +32,18 @@ module top (
   );
 
 
-  // TODO (carson): synchronize reset
-  logic [1:0] rst_sync;
+  // synchronize external reset button to mclk domain
+  wire rst;
 
-  always_ff @ (posedge mclk) begin
-    rst_sync <= (rst_sync << 1) | ~FPGA_RST_N;
-  end
-
-  wire rst = rst_sync[1];
+  sync #(
+    .NUM_FF     (2),
+    .INIT_VALUE (0)
+  ) (
+    .clk   (mclk),
+    .rst   (0),
+    .sig_i (~FPGA_RST_N),
+    .sig_o (rst)
+  );
 
 
   wire lrck;

@@ -36,12 +36,13 @@ module i2s (
 
 
   //////////////////////////////////////////////////
-  // I2S CLOCK EDGE DETECTS AND DELAYS -- TODO (carson): remove
+  // I2S CLOCK EDGE DETECTS AND DELAYS
   //////////////////////////////////////////////////
 
   wire sclk_pedge = (cnt[2:0] == 3'b011);
   wire sclk_nedge = (cnt[2:0] == 3'b111);
   wire lrck_nedge = (cnt[8:0] == 9'h1ff);
+
 
   // 1 sclk period delayed lrck
   logic lrck_z = 0;
@@ -108,21 +109,37 @@ module i2s (
   // I2S TX
   //////////////////////////////////////////////////
 
+  // grab valid data when available
+  logic [23:0] tx_lc_hold = '0;
+
+  always_ff @ (posedge mclk) begin
+    if (rst)         tx_lc_hold <= '0;
+    else if (tx_vld) tx_lc_hold <= tx_data.lc;
+  end
+
+  logic [23:0] tx_rc_hold = '0;
+
+  always_ff @ (posedge mclk) begin
+    if (rst)         tx_rc_hold <= '0;
+    else if (tx_vld) tx_rc_hold <= tx_data.rc;
+  end
+
+
   // register data when valid, shift out data on falling edge of sclk
   logic [31:0] tx_data_lc = '0;
 
   always_ff @ (posedge mclk) begin
-    if (rst)                        tx_data_lc <= '0;
-    else if (tx_vld)                tx_data_lc <= {tx_data.lc, 8'h0};      // TODO (carson): don't accept data during send transaction
-    else if (sclk_nedge & ~lrck & cnt[7:3] > 0/*~lrck_z*/)  tx_data_lc <= tx_data_lc << 1;
+    if (rst)                                    tx_data_lc <= '0;
+    else if (cnt == 8'h3)                       tx_data_lc <= {tx_lc_hold, 8'h0};
+    else if (sclk_nedge & ~lrck & cnt[7:3] > 0) tx_data_lc <= tx_data_lc << 1;
   end
 
   logic [31:0] tx_data_rc = '0;
 
   always_ff @ (posedge mclk) begin
-    if (rst)                       tx_data_rc <= '0;
-    else if (tx_vld)               tx_data_rc <= {tx_data.rc, 8'h0};
-    else if (sclk_nedge & lrck & cnt[7:3] > 0/*lrck_z*/)  tx_data_rc <= tx_data_rc << 1;
+    if (rst)                                   tx_data_rc <= '0;
+    else if (cnt == 8'h3)                      tx_data_rc <= {tx_rc_hold, 8'h0};
+    else if (sclk_nedge & lrck & cnt[7:3] > 0) tx_data_rc <= tx_data_rc << 1;
   end
 
 

@@ -9,7 +9,7 @@ module eff_pipe_tb;
   logic clk = 1;
   logic rst = 0;
 
-  logic        en  =  1;
+  logic        en  =  0;
   logic [15:0] sel = '1;
 
   sample_pkg::sample_t data_i = '{default:'0};
@@ -56,10 +56,9 @@ module eff_pipe_tb;
 
 
   initial begin
-    repeat (10) begin
-      repeat (10) @ (posedge clk);
-
-      //data_i.lc <= (data_i
+    repeat (100) begin
+      repeat(1000) @ (posedge clk);
+      en <= ~en;
     end
   end
 

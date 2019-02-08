@@ -41,12 +41,14 @@ module eff_pipe (
   end
 
 
-  eff_clip #(
-    .DATA_WIDTH ($bits(data_i.lc))
+  eff_hard_clip #(
+    .DATA_WIDTH ($bits(data_i.lc)),
+    .THRESHOLD  (300000)
   ) eff_clip_i (
     .clk    (clk),
     .rst    (rst),
     .en     (eff_sel[0]),
+    .tmp(sel[15:10]),
     .data_i (data_i.lc),
     .vld_i  (vld_i),
     .data_o (data_eff),

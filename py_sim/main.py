@@ -23,7 +23,7 @@ def plot_io(xn: list, yn: list, n: int = -1):
 if __name__ == '__main__':
   fs = 44100
 
-  xn = sinusoid(amp=1, freq=440, phs=0, fs=fs, duration=2)
+  xn = audio.sinusoid(amp=10, freq=440, phs=0, fs=fs, duration=2)
 
   yn = effects.soft_clip(xn, k=8, gain=8)
   #yn = effects.hard_clip(yn, threshold=1, gain=4)
@@ -32,5 +32,5 @@ if __name__ == '__main__':
 
   plot_io(xn, yn, n=300)
 
-  audio.play(xn, fs)
-  audio.play(yn, fs)
+  #audio.play(xn, fs)
+  #audio.play(yn, fs)

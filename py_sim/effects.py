@@ -14,7 +14,11 @@ def soft_clip(xn: list, k: float, gain: float = 1) -> list:
   yn = np.ndarray(len(xn)).astype(np.float32)
 
   for i in range(len(xn)):
-    yn[i] = gain * (xn[i] / (1.0 + k*np.abs(xn[i])))
+    x = xn[i] / (10)
+    yn[i] = gain * (x / (1.0 + k*np.abs(x)))
+    yn[i] *= (10)
+    #yn[i] = gain * (xn[i] / (100.0 + k*np.abs(xn[i])))
+    #yn[i] = gain * ((xn[i]**2) - (xn[i]**3) / 3)
 
   return yn
 
