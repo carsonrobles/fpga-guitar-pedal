@@ -23,14 +23,16 @@ def plot_io(xn: list, yn: list, n: int = -1):
 if __name__ == '__main__':
   fs = 44100
 
-  xn = audio.sinusoid(amp=10, freq=440, phs=0, fs=fs, duration=2)
+  xn = audio.sinusoid(amp=10, freq=440, phs=0, fs=fs, duration=20)
 
-  yn = effects.soft_clip(xn, k=8, gain=8)
-  #yn = effects.hard_clip(yn, threshold=1, gain=4)
+  #yn = effects.soft_clip(xn, k=8, gain=8)
+  yn = effects.hard_clip(xn, threshold=1, gain=4)
+  yn = effects.tremolo(yn)
   #yn = effects.asym_clip(yn, high=1, low=-0.5, gain=2)
   #yn = effects.triangular(yn, gain=1)
 
-  plot_io(xn, yn, n=300)
+  print(yn)
+  plot_io(xn, yn, n=10000)
 
   #audio.play(xn, fs)
-  #audio.play(yn, fs)
+  audio.play(yn, fs)

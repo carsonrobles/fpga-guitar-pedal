@@ -54,3 +54,32 @@ def asym_clip(xn: list, high: float, low: float, gain: float = 1) -> list:
       yn[i] = x
 
   return yn
+
+
+def tremolo(xn: list) -> list:
+  yn = np.ndarray(len(xn)).astype(np.float32)
+
+  # generate triangle wave
+  tn = np.ndarray(len(xn)).astype(np.float32)
+
+  inc = 10.0/(1*len(xn))
+  print(inc)
+
+  sign = 1
+  curr = 0
+
+  for i in range(len(tn)):
+    if curr >= 1.0:
+      print('dir down', curr, i)
+      sign = -1
+    elif curr <= 0:
+      print('dir up', curr, i)
+      sign = 1
+
+    tn[i] = curr
+
+    curr = curr + (sign * inc)
+
+  print(tn)
+  yn = tn
+  return tn*xn
