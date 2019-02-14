@@ -18,13 +18,7 @@ module eff_pipe (
 );
 
 
-  wire [$bits(data_i.lc)-1:0] data_eff;
-  wire                        vld_eff;
-
-
-  always_comb data_o.lc = data_eff;
-  always_comb data_o.rc = data_o.lc;
-  always_comb vld_o     = vld_eff;
+  localparam int DATA_WIDTH = $bits(data_i.lc);
 
 
   logic [15:0] eff_sel = '0;
@@ -41,19 +35,46 @@ module eff_pipe (
   end
 
 
+  wire [DATA_WIDTH-1:0] data_del;
+  wire                  vld_del;
+
+  // TODO (carson): only works with power of 2 depth
+  eff_delay #(
+    .DATA_WIDTH (DATA_WIDTH),
+    .FIFO_DEPTH (16384)         // half second delay
+  ) eff_delay_i (
+    .clk    (clk),
+    .rst    (rst),
+    .en     (eff_sel[0]),
+    .data_i (data_i.lc),
+    .vld_i  (vld_i),
+    .data_o (data_del),
+    .vld_o  (vld_del)
+  );
+
+
+  wire [DATA_WIDTH-1:0] data_hc;
+  wire                  vld_hc;
+
   eff_hard_clip #(
-    .DATA_WIDTH ($bits(data_i.lc)),
+    .DATA_WIDTH (DATA_WIDTH),
     .THRESHOLD  (300000)
   ) eff_clip_i (
     .clk    (clk),
     .rst    (rst),
-    .en     (eff_sel[0]),
+    .en     (eff_sel[1]),
     .tmp(sel[15:10]),
-    .data_i (data_i.lc),
-    .vld_i  (vld_i),
-    .data_o (data_eff),
-    .vld_o  (vld_eff)
+    .data_i (data_del),
+    .vld_i  (vld_del),
+    .data_o (data_hc),
+    .vld_o  (vld_hc)
   );
+
+
+  // assign output data and vld
+  always_comb data_o.lc = data_hc;
+  always_comb data_o.rc = data_o.lc;
+  always_comb vld_o     = vld_hc;
 
 
 endmodule
