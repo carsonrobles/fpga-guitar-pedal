@@ -1,10 +1,8 @@
 `timescale 1ns / 1ps
 `default_nettype none
 
-// shift in data on vld_i
-// output data is last register in mem
 
-module del_fifo #(
+module sync_fifo #(
   parameter int DATA_WIDTH = 8,
   parameter int FIFO_DEPTH = 8
 ) (
@@ -12,20 +10,19 @@ module del_fifo #(
   input  wire                   rst,
 
   input  wire                   en,
+  input  wire                   we,
 
   input  wire  [DATA_WIDTH-1:0] data_i,
-  input  wire                   vld_i,
 
   output logic [DATA_WIDTH-1:0] data_o
 );
 
 
   logic [        DATA_WIDTH-1:0] mem    [FIFO_DEPTH];
-  logic [$clog2(FIFO_DEPTH)-1:0] rd_ptr;
   logic [$clog2(FIFO_DEPTH)-1:0] wr_ptr = '0;
 
 
-  wire wr = en & vld_i;
+  wire wr = en & we;
 
 
   // increment write pointer on valid write
@@ -34,11 +31,7 @@ module del_fifo #(
     else if (wr) wr_ptr <= wr_ptr + 1;
   end
 
-  // read pointer should always lead write pointer by address
-  always_comb rd_ptr = wr_ptr + 1;
-
-
-  // write on vld and en
+  // write on we and en
   always_ff @ (posedge clk) begin
     if (wr) mem[wr_ptr] <= data_i;
   end

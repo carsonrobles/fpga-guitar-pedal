@@ -1,6 +1,11 @@
 `timescale 1ns / 1ps
 `default_nettype none
 
+
+// TODO (carson):
+// - adjustable delay length and decay
+
+
 module eff_delay #(
   parameter int DATA_WIDTH = 8,
   parameter int FIFO_DEPTH = 8
@@ -30,15 +35,15 @@ module eff_delay #(
   wire  signed [DATA_WIDTH-1:0] data_z;
 
   // instantiate delay fifo
-  del_fifo #(
+  sync_fifo #(
     .DATA_WIDTH (DATA_WIDTH),
     .FIFO_DEPTH (FIFO_DEPTH)
-  ) del_fifo_i (
+  ) sync_fifo_i (
     .clk    (clk),
     .rst    (rst),
     .en     (1),
+    .we     (vld_o),
     .data_i (data_o),
-    .vld_i  (vld_o),
     .data_o (data_z)
   );
 
