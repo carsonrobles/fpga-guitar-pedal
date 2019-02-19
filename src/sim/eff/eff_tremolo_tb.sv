@@ -35,7 +35,7 @@ module eff_tremolo_tb;
 
 
   always_ff @ (posedge clk)
-    data_i <= data_i + 1;
+    data_i <= 12'h123;//data_i + 1;
 
 
   initial begin

@@ -18,7 +18,8 @@ module eff_tremolo #(
 );
 
 
-  localparam STAGES = 3;
+  localparam WAVE_WIDTH = DATA_WIDTH - 3;
+  localparam STAGES     = 3;
 
 
   logic signed [  DATA_WIDTH-1:0] data_r   = '0;
@@ -27,7 +28,7 @@ module eff_tremolo #(
   logic        [      STAGES-1:0] vld_eff  = '0;
 
 
-  logic [11:0] cnt = '0;
+  logic [0:0] cnt = '0;
 
   always_ff @ (posedge clk) begin
     if (rst) cnt <= '0;
@@ -38,11 +39,11 @@ module eff_tremolo #(
   wire nxt = &cnt;
 
 
-  wire [DATA_WIDTH-1:0] wav;
+  wire [WAVE_WIDTH-1:0] wav;
 
   // instantiate triangle wave generator
   tri_wave_gen #(
-    .N (DATA_WIDTH)
+    .N (WAVE_WIDTH)
   ) dut (
     .clk (clk),
     .rst (rst),
@@ -62,8 +63,8 @@ module eff_tremolo #(
       data_eff <= '0;
     end else begin
       data_r   <= data_i;
-      data_m   <= data_r * mult;
-      data_eff <= (en) ? data_m >> DATA_WIDTH : data_m;
+      data_m   <= {{WAVE_WIDTH{data_r[DATA_WIDTH-1]}}, data_r} * {{WAVE_WIDTH{mult[DATA_WIDTH-1]}}, mult};
+      data_eff <= (en) ? data_m >> WAVE_WIDTH : data_m;
     end
   end
 

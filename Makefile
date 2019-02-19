@@ -1,4 +1,4 @@
-PROJ_PATH = /home/carson/poly/senior_project/fpga-guitar-pedal
+PROJ_PATH = /home/carson/poly/fpga-guitar-pedal
 PART      = xc7a100tcsg324-1
 
 CONSTR    = $(PROJ_PATH)/src/xdc/constraints.xdc
