@@ -18,6 +18,7 @@ BIT       = $(PROJ_PATH)/fab/$(TOP).bit
 .PHONY: place
 .PHONY: route
 .PHONY: bit
+.PHONY: program
 .PHONY: clean
 
 # TODO: this is the flow, but polish it
@@ -71,12 +72,24 @@ $(BIT): $(PROJ_PATH)/scripts/bitstream.tcl Makefile $(ROUTE_DCP)
 	vivado -nojournal -log $(PROJ_PATH)/fab/bitstream.log -mode batch \
 		-source $< -tclargs $(ROUTE_DCP) $@
 
+# program connected device
+program:
+	# program.tcl args
+	#   0: bit file to program device with
+	vivado -nojournal -log $(PROJ_PATH)/fab/program.log -mode batch \
+		-source $(PROJ_PATH)/scripts/program.tcl -tclargs $(BIT)
+
 # remove output files
 clean:
 	# remove misc Xilinx files
-	rm -rf .Xil usage_statistics_webtalk.*
+	rm -rf .Xil $(PROJ_PATH)/fab/.Xil usage_statistics_webtalk.*
 	rm -rf $(PROJ_PATH)/fab/vivado* $(PROJ_PATH)/fab/*.log
 	rm -rf vivado* webtalk* xsim* *.log *.pb
 
 	# remove generated checkpoint files and bit file
 	rm -rf $(SYNTH_DCP) $(PLACE_DCP) $(ROUTE_DCP) $(BIT)
+
+clean_proj:
+	# remove misc Xilinx files
+	rm -rf $(PROJ_PATH)/fab/fpga-guitar-pedal.cache $(PROJ_PATH)/fab/fpga-guitar-pedal.hw
+	rm -rf $(PROJ_PATH)/fab/fpga-guitar-pedal.ip_user_files $(PROJ_PATH)/fab/fpga-guitar-pedal.sim
