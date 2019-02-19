@@ -38,7 +38,7 @@ module top (
   sync #(
     .NUM_FF     (2),
     .INIT_VALUE (0)
-  ) (
+  ) sync_rst_i (
     .clk   (mclk),
     .rst   (0),
     .sig_i (~FPGA_RST_N),
@@ -57,7 +57,7 @@ module top (
   // i2s communication
   i2s i2s_i (
     .mclk    (mclk),
-    .rst     (~FPGA_RST_N),
+    .rst     (rst),
     .rx_data (rx_data),
     .rx_vld  (rx_vld),
     .tx_data (tx_data),
@@ -82,7 +82,7 @@ module top (
   // effects pipe
   eff_pipe eff_pipe_i (
     .clk    (mclk),
-    .rst    (~FPGA_RST_N),
+    .rst    (rst),
     .en     (eff_en),
     .sel    (SW),
     .data_i (rx_data),
@@ -98,7 +98,7 @@ module top (
   // heartbeat LEDs
   rgb_drv rgb_drv_l_i (
     .clk  (FPGA_CLK_100),
-    .rst  (~FPGA_RST_N),
+    .rst  (rst),
     .mode (1),
     .red  (RGB_L[0]),
     .grn  (RGB_L[1]),

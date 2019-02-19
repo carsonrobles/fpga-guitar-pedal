@@ -44,7 +44,7 @@ module eff_tremolo #(
   // instantiate triangle wave generator
   tri_wave_gen #(
     .N (WAVE_WIDTH)
-  ) dut (
+  ) tri_wave_gen_i (
     .clk (clk),
     .rst (rst),
     .en  (en),
