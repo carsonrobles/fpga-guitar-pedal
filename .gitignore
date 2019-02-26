@@ -11,3 +11,4 @@ __pycache__
 usage_statistics_webtalk.*
 *.bit
 *.dcp
+*.hex

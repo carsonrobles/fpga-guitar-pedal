@@ -1,0 +1,50 @@
+#!/usr/bin/python3
+
+import math
+import sys
+
+import click
+
+
+def __int_to_hex(n, width):
+  return hex(n & (2**width - 1))[2:]
+
+
+def __write_values(fp, row, values):
+  prefix = '@{:08x}'.format(row*16)
+  line   = ' '.join([prefix, *values]) + '\n'
+
+  fp.write(line)
+
+
+@click.command()
+@click.option('--file_name', default='lut.hex', help='The file to write the generated sine wave data to.')
+@click.option('--word_size', default='8', help='Sample size of the generated sine wave.')
+@click.option('--sample_count', default='256', help='Sample size of the generated sine wave.')
+def tool(file_name, word_size, sample_count):
+  ws   = int(word_size)
+  sc   = int(sample_count)
+  df   = 2*math.pi/(sc)
+  mask = 2**ws - 1
+
+  with open(file_name, 'w') as fp:
+    row    = 0
+    values = []
+
+    for n in range(sc):
+      res = int(math.sin(df*n) * (2**(ws-1) - 1))
+
+      values.append(__int_to_hex(res, ws))
+
+      if (n+1) % 16 == 0:
+        __write_values(fp, row, values)
+
+        row    = row + 1
+        values = []
+
+    if len(values):
+      __write_values(fp, row, values)
+
+
+if __name__ == '__main__':
+  tool()
