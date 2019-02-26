@@ -1,6 +1,8 @@
 PROJ_PATH = /home/carson/poly/fpga-guitar-pedal
 PART      = xc7a100tcsg324-1
 
+TOOLS     = $(PROJ_PATH)/tools
+DATA      = $(PROJ_PATH)/data
 CONSTR    = $(PROJ_PATH)/src/xdc/constraints.xdc
 HDR       = $(wildcard $(PROJ_PATH)/src/rtl/*.svh $(PROJ_PATH)/src/rtl/*/*.svh)
 SRC       = $(wildcard $(PROJ_PATH)/src/rtl/*.sv $(PROJ_PATH)/src/rtl/*/*.sv)
@@ -20,6 +22,8 @@ BIT       = $(PROJ_PATH)/fab/$(TOP).bit
 .PHONY: bit
 .PHONY: program
 .PHONY: clean
+.PHONY: clean_proj
+.PHONY: clean_all
 
 # TODO: this is the flow, but polish it
 #.PHONY:sim
@@ -37,6 +41,10 @@ bit  : $(BIT)
 
 # synthesis
 $(SYNTH_DCP): $(PROJ_PATH)/scripts/synth.tcl Makefile $(CONSTR) $(HDR) $(SRC)
+	# generate sine look up table
+	mkdir -p $(DATA)
+	$(TOOLS)/sin_lut_gen --file_name $(DATA)/lut.hex --word_size 24 --sample_count 256
+
 	# synth.tcl args
 	#   0: part
 	#   1: top level module name
@@ -93,3 +101,5 @@ clean_proj:
 	# remove misc Xilinx files
 	rm -rf $(PROJ_PATH)/fab/fpga-guitar-pedal.cache $(PROJ_PATH)/fab/fpga-guitar-pedal.hw
 	rm -rf $(PROJ_PATH)/fab/fpga-guitar-pedal.ip_user_files $(PROJ_PATH)/fab/fpga-guitar-pedal.sim
+
+clean_all: clean clean_proj
