@@ -1,7 +1,6 @@
 `timescale 1ns / 1ps
 `default_nettype none
 
-`include "sample_pkg.svh"
 
 module eff_hard_clip #(
   parameter int DATA_WIDTH = 8,
