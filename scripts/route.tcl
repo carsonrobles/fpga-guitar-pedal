@@ -3,6 +3,6 @@ set output           [lindex $argv 1]
 
 open_checkpoint $place_checkpoint
 
-route_design
+route_design -timing_summary
 
 write_checkpoint -force $output
