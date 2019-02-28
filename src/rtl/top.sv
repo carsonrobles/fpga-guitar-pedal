@@ -98,7 +98,7 @@ module top (
   // heartbeat LEDs
   rgb_drv rgb_drv_l_i (
     .clk  (FPGA_CLK_100),
-    .rst  (rst),
+    .rst  (~FPGA_RST_N),
     .mode (1),
     .red  (RGB_L[0]),
     .grn  (RGB_L[1]),
