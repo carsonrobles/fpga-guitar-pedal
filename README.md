@@ -12,7 +12,7 @@ The goal of this project is to take the place of multiple separate traditional g
 
 
 ## Effects
-Below is a list of the currently working effects followed by a list of effects that are in development or are planning on being developed.
+Below is a list of the currently working effects followed by a list of effects that are in development or are planned for future development.
 
 ### Working Effects
 - Distortion (variable gain hard clipping)
