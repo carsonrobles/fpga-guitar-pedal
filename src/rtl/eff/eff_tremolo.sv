@@ -42,9 +42,9 @@ module eff_tremolo #(
   wire [WAVE_WIDTH-1:0] wav;
 
   // instantiate triangle wave generator
-  tri_wave_gen #(
+  nco_tri #(
     .N (WAVE_WIDTH)
-  ) tri_wave_gen_i (
+  ) nco_tri (
     .clk (clk),
     .rst (rst),
     .en  (en),

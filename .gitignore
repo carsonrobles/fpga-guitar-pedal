@@ -12,3 +12,4 @@ usage_statistics_webtalk.*
 *.bit
 *.dcp
 *.hex
+fab/data

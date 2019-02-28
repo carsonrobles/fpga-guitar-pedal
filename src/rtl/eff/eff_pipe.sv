@@ -87,10 +87,23 @@ module eff_pipe (
   );
 
 
+  // TEMP (carson)
+  wire [23:0] data_nco;
+  wire        vld_nco = 1;
+
+  nco nco_i (
+    .clk (clk),
+    .rst (rst),
+    .en (1),
+    .freq (eff_sel),
+    .wav  (data_nco)
+  );
+
+
   // assign output data and vld
-  always_comb data_o.lc = data_trem;
+  always_comb data_o.lc = data_nco;//data_trem;
   always_comb data_o.rc = data_o.lc;
-  always_comb vld_o     = vld_trem;
+  always_comb vld_o     = vld_nco;//vld_trem;
 
 
 endmodule

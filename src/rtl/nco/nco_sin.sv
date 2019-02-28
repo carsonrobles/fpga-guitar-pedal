@@ -1,8 +1,8 @@
 `include "defaults.svh"
 
 
-module nco #(
-  parameter string FILE_NAME  = "/home/carson/poly/fpga-guitar-pedal/data/lut.hex",
+module nco_sin #(
+  parameter  FILE_NAME  = "/home/carson/poly/fpga-guitar-pedal/fab/data/lut.hex",
   parameter int    WIDTH      = 24,
   parameter int    DEPTH      = 256,
   parameter int    FREQ_WIDTH = 8

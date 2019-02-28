@@ -2,7 +2,7 @@
 
 
 module sin_lut #(
-  parameter string FILE_NAME = "/home/carson/poly/fpga-guitar-pedal/data/lut.hex",
+  parameter FILE_NAME = "/home/carson/poly/fpga-guitar-pedal/fab/data/lut.hex",
   parameter int    WIDTH     = 24,
   parameter int    DEPTH     = 256
 ) (

@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 `default_nettype none
 
-module tri_wave_gen_tb;
+module nco_tri_tb;
 
 
   logic clk = 0;
@@ -14,7 +14,7 @@ module tri_wave_gen_tb;
 
 
   // instantiate dut
-  tri_wave_gen #(
+  nco_tri #(
     .N (3)
   ) dut (
     .clk (clk),
