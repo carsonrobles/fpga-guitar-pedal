@@ -16,9 +16,9 @@ Below is a list of the currently working effects followed by a list of effects t
 
 ### Working Effects
 - Distortion (variable gain hard clipping)
-- Delay (constant)
-
-### Future Effects
-- Delay (variable length and decay)
+- Delay
 - Tremolo
+
+### Planned Future Effects
 - Wah Wah
+- Phaser
