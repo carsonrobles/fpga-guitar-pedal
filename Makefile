@@ -80,6 +80,11 @@ $(BIT): $(PROJ_PATH)/scripts/bitstream.tcl Makefile $(ROUTE_DCP)
 	vivado -nojournal -log $(PROJ_PATH)/fab/bitstream.log -mode batch \
 		-source $< -tclargs $(ROUTE_DCP) $@
 
+	$(TOOLS)/error_parse $(PROJ_PATH)/fab/synth.log \
+					             $(PROJ_PATH)/fab/place.log \
+											 $(PROJ_PATH)/fab/route.log \
+											 $(PROJ_PATH)/fab/bitstream.log \
+
 # program connected device
 program:
 	# program.tcl args
