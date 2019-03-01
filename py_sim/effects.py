@@ -1,4 +1,8 @@
+import matplotlib.pyplot as plt
 import numpy as np
+import scipy.signal as sig
+
+import audio
 
 
 def triangular(xn: list, exp: float = 3, gain: float = 1) -> list:
@@ -83,3 +87,39 @@ def tremolo(xn: list) -> list:
   print(tn)
   yn = tn
   return tn*xn
+
+
+def wah(xn: list) -> list:
+  #yn = np.ndarray(len(xn)).astype(np.float32)
+  l  = 30
+  fc = 0.000001
+  fo = 0.15
+  n  = np.arange(-l, l+1, dtype=np.int)
+
+  bk = 8300 * 2*fc*np.sinc(2*n*fc) #*sig.hamming(len(n))
+  ak = [1, *[0]*len(bk-1)]
+
+  cnt = 0
+
+  for i in range(len(bk)):
+    if np.abs(bk[i]) < 1e-4:
+      bk[i] = 0
+    else:
+      cnt += 1
+
+  bk_mod = bk #* 2*np.cos(2*np.pi*fo*(n+l))
+
+  print(ak)
+  print(bk)
+  print(bk_mod)
+  print('non zero coefficient count: {}'.format(cnt))
+
+  (w, h) = sig.freqz(bk_mod, ak)
+  plt.plot(44.1e3*w/(2*np.pi), np.abs(h))
+  plt.show()
+  plt.plot(bk_mod)
+  plt.show()
+
+  cw = audio.sinusoid(1, 10000, 0, 44.1e3, 1)
+
+  return sig.lfilter(bk, ak, xn)

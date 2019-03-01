@@ -18,7 +18,7 @@ module sync_fifo #(
 );
 
 
-  logic [        DATA_WIDTH-1:0] mem    [FIFO_DEPTH];
+  logic [        DATA_WIDTH-1:0] mem [FIFO_DEPTH];
   logic [$clog2(FIFO_DEPTH)-1:0] wr_ptr = '0;
 
 

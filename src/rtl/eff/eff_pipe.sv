@@ -53,6 +53,22 @@ module eff_pipe (
   );
 
 
+  wire [DATA_WIDTH-1:0] data_wah;
+  wire                  vld_wah;
+
+  eff_wah #(
+    .DATA_WIDTH (DATA_WIDTH)
+  ) eff_wah_i (
+    .clk    (clk),
+    .rst    (rst),
+    .en     (eff_sel[1]),
+    .data_i (data_del),
+    .vld_i  (vld_del),
+    .data_o (data_wah),
+    .vld_o  (vld_wah)
+  );
+
+
   wire [DATA_WIDTH-1:0] data_hc;
   wire                  vld_hc;
 
@@ -62,10 +78,10 @@ module eff_pipe (
   ) eff_clip_i (
     .clk    (clk),
     .rst    (rst),
-    .en     (eff_sel[1]),
+    .en     (eff_sel[2]),
     .tmp(sel[15:10]),
-    .data_i (data_del),
-    .vld_i  (vld_del),
+    .data_i (data_wah),
+    .vld_i  (vld_wah),
     .data_o (data_hc),
     .vld_o  (vld_hc)
   );
@@ -79,7 +95,7 @@ module eff_pipe (
   ) eff_tremolo_i (
     .clk    (clk),
     .rst    (rst),
-    .en     (eff_sel[2]),
+    .en     (eff_sel[3]),
     .data_i (data_hc),
     .vld_i  (vld_hc),
     .data_o (data_trem),
