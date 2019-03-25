@@ -1,7 +1,7 @@
 `include "defaults.svh"
 
 
-module nco_sin_tb;
+module nco_cos_tb;
 
 
   logic        clk  = 0;
@@ -13,7 +13,7 @@ module nco_sin_tb;
 
   wire  [23:0] wav;
 
-  nco_sin #(
+  nco_cos #(
     .FILE_NAME  ("/home/carson/poly/fpga-guitar-pedal/fab/data/lut.hex"),
     .WIDTH      (24),
     .DEPTH      (256),

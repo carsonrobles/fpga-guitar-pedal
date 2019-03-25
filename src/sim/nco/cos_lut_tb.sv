@@ -1,7 +1,7 @@
 `include "defaults.svh"
 
 
-module sin_lut_tb;
+module cos_lut_tb;
 
 
   logic        clk = 0;
@@ -12,7 +12,7 @@ module sin_lut_tb;
   wire  [23:0] wav;
 
 
-  sin_lut dut (
+  cos_lut dut (
     .clk (clk),
     .rst (rst),
     .phi (phi),

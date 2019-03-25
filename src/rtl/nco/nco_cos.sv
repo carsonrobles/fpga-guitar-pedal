@@ -1,10 +1,10 @@
 `include "defaults.svh"
 
 
-module nco_sin #(
+module nco_cos #(
   parameter  FILE_NAME  = "/home/carson/poly/fpga-guitar-pedal/fab/data/lut.hex",
   parameter int    WIDTH      = 24,
-  parameter int    DEPTH      = 256,
+  parameter int    DEPTH      = 512,
   parameter int    FREQ_WIDTH = 8
 ) (
   input  wire                   clk,
@@ -43,11 +43,11 @@ module nco_sin #(
   end
 
 
-  sin_lut #(
+  cos_lut #(
     .FILE_NAME (FILE_NAME),
     .WIDTH     (WIDTH),
     .DEPTH     (DEPTH)
-  ) sin_lut_i (
+  ) cos_lut_i (
     .clk (clk),
     .rst (rst),
     .phi (phi),

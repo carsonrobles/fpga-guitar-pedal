@@ -1,7 +1,7 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
--- Date        : Thu Feb 28 22:51:27 2019
+-- Date        : Fri Mar  1 13:49:05 2019
 -- Host        : ubuntu running 64-bit Ubuntu 18.04.1 LTS
 -- Command     : write_vhdl -force -mode funcsim
 --               /home/carson/poly/fpga-guitar-pedal/src/ip/clk_wiz_ip/clk_wiz_ip_sim_netlist.vhdl

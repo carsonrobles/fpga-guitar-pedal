@@ -1,10 +1,10 @@
 `include "defaults.svh"
 
 
-module sin_lut #(
-  parameter FILE_NAME = "/home/carson/poly/fpga-guitar-pedal/fab/data/lut.hex",
-  parameter int    WIDTH     = 24,
-  parameter int    DEPTH     = 256
+module cos_lut #(
+  parameter     FILE_NAME = "/home/carson/poly/fpga-guitar-pedal/fab/data/lut.hex",
+  parameter int WIDTH     = 24,
+  parameter int DEPTH     = 256
 ) (
   input  wire                      clk,
   input  wire                      rst,
@@ -23,8 +23,7 @@ module sin_lut #(
   end
 
 
-  always_comb
-    wav = lut[phi];
+  always_comb wav = lut[phi];
 
 
 endmodule
