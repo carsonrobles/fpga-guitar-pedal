@@ -1,5 +1,4 @@
-`timescale 1ns / 1ps
-`default_nettype none
+`include "defaults.svh"
 
 
 module eff_flanger #(
@@ -18,29 +17,7 @@ module eff_flanger #(
 );
 
 
-  wire [DATA_WIDTH-1:0] data_z;
-  wire [DATA_WIDTH-1:0] data_w;
-
-
-  logic [15:0] cnt = '0;
-  //wire  [ 8:0] del;
-
-  always_ff @ (posedge clk) cnt <= cnt + 1;
-
-  /*nco_tri #(
-    .N (9)
-  ) nco_tri_i (
-    .clk (clk),
-    .rst (rst),
-    .en  (1),
-    .nxt (&cnt),
-    .wav (del)
-  );*/
-
-  wire  [23:0] wav;
-  wire signed [ 7:0] del_tmp = wav[23-:8];
-  wire        [ 7:0] del     = (del_tmp == -128) ? 1 : del_tmp + 128;
-
+  wire [23:0] wav;
 
   nco_cos #(
     .FREQ_WIDTH (16)
@@ -48,10 +25,14 @@ module eff_flanger #(
     .clk (clk),
     .rst (rst),
     .en  (1),
-    .freq (16'h0510),
+    .freq (16'h8aef),
     .wav (wav)
   );
 
+
+  wire signed [           7:0] wav_msb = wav[23-:8];
+  wire        [           7:0] del     = wav_msb + 128;
+  wire        [DATA_WIDTH-1:0] data_z;
 
   var_del #(
     .DATA_WIDTH (DATA_WIDTH),
@@ -62,14 +43,13 @@ module eff_flanger #(
     .del    ({1'b0, del}),
     .data_i (data_i),
     .vld_i  (vld_i),
-    .data_w (data_w),
     .data_o (data_z)
   );
 
 
   always_ff @ (posedge clk)
     if (en & vld_i)
-      data_o <= {data_z[23], data_z[23:1]} + {data_i[23], data_i[23:1]};//data_z + data_i;
+      data_o <= {data_z[23], data_z[23:1]} + {data_i[23], data_i[23:1]};      // 50/50 wet/dry signal mix
     else if (~en)
       data_o <= data_i;
 

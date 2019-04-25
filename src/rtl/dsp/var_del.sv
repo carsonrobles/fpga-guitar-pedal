@@ -1,8 +1,6 @@
 `include "defaults.svh"
 
 
-// TODO (carson): change module interface so the amount of delay
-//                is taken as an input rather than internally generated
 module var_del #(
   parameter int DATA_WIDTH = 8,
   parameter int BUFR_DEPTH = 512
@@ -15,7 +13,6 @@ module var_del #(
   input  wire  [        DATA_WIDTH-1:0] data_i,
   input  wire                           vld_i,
 
-  output logic [        DATA_WIDTH-1:0] data_w,
   output logic [        DATA_WIDTH-1:0] data_o
 );
 
@@ -36,9 +33,12 @@ module var_del #(
   end
 
 
-  always_ff @ (posedge clk) dd_ptr <= nd_ptr - del;
+  // delays must be at least 1
+  wire [$bits(del)-1:0] del_r = (del < 1) ? 1 : del;
+
+
+  always_ff @ (posedge clk) dd_ptr <= nd_ptr - del - 1;
   always_ff @ (posedge clk) data_o <= mem[dd_ptr];
-  always_ff @ (posedge clk) data_w <= del<<14;
 
 
 endmodule

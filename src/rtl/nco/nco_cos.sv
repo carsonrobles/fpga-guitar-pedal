@@ -32,7 +32,7 @@ module nco_cos #(
   // register new frequency
   always_ff @ (posedge clk) begin
     if (rst)                freq_r <= 0;
-    else if (cnt == freq_r) freq_r <= 16'h5710;//~freq;
+    else if (cnt == freq_r) freq_r <= ~freq;
   end
 
 
@@ -45,7 +45,6 @@ module nco_cos #(
   end
 
 
-  wire [WIDTH-1:0] wav_tmp;
   cos_lut #(
     .FILE_NAME (FILE_NAME),
     .WIDTH     (WIDTH),
@@ -54,12 +53,8 @@ module nco_cos #(
     .clk (clk),
     .rst (rst),
     .phi (phi),
-    .wav (wav_tmp)
+    .wav (wav)
   );
-
-
-  always_comb
-    wav = wav_tmp;//{{2{wav_tmp[WIDTH-1]}}, wav_tmp[WIDTH-1:2]};
 
 
 endmodule
