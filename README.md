@@ -15,10 +15,11 @@ The goal of this project is to take the place of multiple separate traditional g
 Below is a list of the currently working effects followed by a list of effects that are in development or are planned for future development.
 
 ### Working Effects
-- Distortion (variable gain hard clipping)
 - Delay
+- Distortion (variable gain hard clipping)
+- Flanger
 - Tremolo
 
-### Planned Future Effects
+### Effects in Development or Planned for the Future
 - Wah Wah
 - Phaser
