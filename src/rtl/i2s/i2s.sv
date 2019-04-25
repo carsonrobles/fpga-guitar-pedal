@@ -1,6 +1,4 @@
-`timescale 1ns / 1ps
-`default_nettype none
-
+`include "defaults.svh"
 `include "sample_pkg.svh"
 
 module i2s (

@@ -2,7 +2,7 @@
 `default_nettype none
 
 
-module tri_wave_gen #(
+module nco_tri #(
   parameter int N = 8
 ) (
   input  wire          clk,

@@ -1,0 +1,26 @@
+#!/usr/bin/python3
+
+
+import sys
+
+
+def tool(files):
+  for f in files:
+    print('{}: '.format(f))
+
+    try:
+      with open(f, 'r') as fp:
+        lines = fp.readlines()
+
+        for i in range(len(lines)):
+          if 'Warnings' in lines[i] and 'Critical' in lines[i] and 'Errors' in lines[i]:
+            print(lines[i][:-1])
+    except:
+      print('could not open file: {}'.format(f))
+
+
+if __name__ == '__main__':
+  if len(sys.argv) > 1:
+    tool(sys.argv[1:])
+  else:
+    print('no input files provided')
