@@ -87,6 +87,22 @@ module eff_pipe (
   );
 
 
+  wire [DATA_WIDTH-1:0] data_fl;
+  wire                  vld_fl;
+
+  eff_flanger #(
+    .DATA_WIDTH (DATA_WIDTH)
+  ) eff_flanger_i (
+    .clk    (clk),
+    .rst    (rst),
+    .en     (eff_sel[3]),
+    .data_i (data_wah),
+    .vld_i  (vld_wah),
+    .data_o (data_fl),
+    .vld_o  (vld_fl)
+  );
+
+
   wire [DATA_WIDTH-1:0] data_trem;
   wire                  vld_trem;
 
@@ -95,9 +111,9 @@ module eff_pipe (
   ) eff_tremolo_i (
     .clk    (clk),
     .rst    (rst),
-    .en     (eff_sel[3]),
-    .data_i (data_wah),
-    .vld_i  (vld_wah),
+    .en     (eff_sel[4]),
+    .data_i (data_fl),
+    .vld_i  (vld_fl),
     .data_o (data_trem),
     .vld_o  (vld_trem)
   );

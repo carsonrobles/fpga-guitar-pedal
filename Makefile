@@ -43,7 +43,7 @@ bit  : $(BIT)
 $(SYNTH_DCP): $(PROJ_PATH)/scripts/synth.tcl Makefile $(CONSTR) $(HDR) $(SRC)
 	# generate sine look up table
 	mkdir -p $(DATA)
-	$(TOOLS)/sin_lut_gen --file_name $(DATA)/lut.hex --word_size 24 --sample_count 256
+	$(TOOLS)/cos_lut_gen --file_name $(DATA)/lut.hex --word_size 24 --sample_count 1024
 
 	# synth.tcl args
 	#   0: part

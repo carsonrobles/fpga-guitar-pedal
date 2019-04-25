@@ -18,9 +18,9 @@ def __write_values(fp, row, values):
 
 
 @click.command()
-@click.option('--file_name', default='lut.hex', help='The file to write the generated sine wave data to.')
-@click.option('--word_size', default='8', help='Sample size of the generated sine wave.')
-@click.option('--sample_count', default='256', help='Sample size of the generated sine wave.')
+@click.option('--file_name', default='lut.hex', help='The file to write the generated cosine wave data to.')
+@click.option('--word_size', default='8', help='Sample size of the generated cosine wave.')
+@click.option('--sample_count', default='256', help='Sample size of the generated cosine wave.')
 def tool(file_name, word_size, sample_count):
   ws   = int(word_size)
   sc   = int(sample_count)
@@ -32,7 +32,7 @@ def tool(file_name, word_size, sample_count):
     values = []
 
     for n in range(sc):
-      res = int(math.sin(df*n) * (2**(ws-1) - 1))
+      res = int(math.cos(df*n) * (2**(ws-1) - 1))
 
       values.append(__int_to_hex(res, ws))
 
