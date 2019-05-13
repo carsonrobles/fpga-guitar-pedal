@@ -13,3 +13,4 @@ usage_statistics_webtalk.*
 *.dcp
 *.hex
 fab/data
+.DS_Store
