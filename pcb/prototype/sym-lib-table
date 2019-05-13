@@ -1,3 +1,0 @@
-(sym_lib_table
-  (lib (name LM2940)(type Legacy)(uri ${KIPRJMOD}/lib/UL_LM2940IMP50/KiCAD/2019-05-07_23-25-32/2019-05-07_23-25-32.lib)(options "")(descr ""))
-)
