@@ -1,9 +1,10 @@
 PROJ_PATH = /home/carson/poly/fpga-guitar-pedal
-PART      = xc7a100tcsg324-1
+PART      = xc7a35tcpg236-1
+#PART      = xc7a100tcsg324-1
 
 TOOLS     = $(PROJ_PATH)/tools
 DATA      = $(PROJ_PATH)/fab/data
-CONSTR    = $(PROJ_PATH)/src/xdc/constraints.xdc
+CONSTR    = $(PROJ_PATH)/src/xdc/cmod_constraints.xdc
 HDR       = $(wildcard $(PROJ_PATH)/src/rtl/*.svh $(PROJ_PATH)/src/rtl/*/*.svh)
 SRC       = $(wildcard $(PROJ_PATH)/src/rtl/*.sv $(PROJ_PATH)/src/rtl/*/*.sv)
 IP        = $(wildcard $(PROJ_PATH)/src/ip/*/*.xci)

@@ -1,13 +1,13 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
-// Date        : Wed Apr 24 12:31:04 2019
-// Host        : ubuntu running 64-bit Ubuntu 18.04.1 LTS
+// Date        : Mon May 13 16:12:42 2019
+// Host        : ubuntu running 64-bit Ubuntu 18.04.2 LTS
 // Command     : write_verilog -force -mode synth_stub
 //               /home/carson/poly/fpga-guitar-pedal/src/ip/clk_wiz_ip/clk_wiz_ip_stub.v
 // Design      : clk_wiz_ip
 // Purpose     : Stub declaration of top-level module interface
-// Device      : xc7a100tcsg324-1
+// Device      : xc7a35tcpg236-1
 // --------------------------------------------------------------------------------
 
 // This empty module with port declaration file causes synthesis tools to infer a black box for IP.

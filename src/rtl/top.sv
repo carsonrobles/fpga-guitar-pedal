@@ -2,15 +2,14 @@
 `include "sample_pkg.svh"
 
 module top (
-  input  wire        FPGA_CLK_100,
-  input  wire        FPGA_RST_N,
+  input  wire        FPGA_CLK_12,
+  input  wire        FPGA_RST,
 
-  input  wire [15:0] SW,                  // switches
-  output wire [15:0] LED,                 // LEDs
-  output wire [ 2:0] RGB_L,               // RGB LEDs
-  output wire [ 2:0] RGB_R,
+  //input  wire [15:0] SW,                  // switches
+  //output wire [15:0] LED,                 // LEDs
+  output wire [ 2:0] RGB,                   // RGB LEDs
 
-  output wire        JA_MCLK_TX,          // PMOD I2S ports
+  output wire        JA_MCLK_TX,            // PMOD I2S ports
   output wire        JA_LRCK_TX,
   output wire        JA_SCLK_TX,
   output wire        JA_SDO_TX,
@@ -21,11 +20,16 @@ module top (
 );
 
 
+  // TODO
+  wire [15:0] SW = '1;
+  wire [15:0] LED;
+
+
   wire mclk;
 
   mclk_gen mclk_gen_i (
-    .clk  (FPGA_CLK_100),
-    .rst  (~FPGA_RST_N),
+    .clk  (FPGA_CLK_12),
+    .rst  (FPGA_RST),
     .mclk (mclk)
   );
 
@@ -39,7 +43,7 @@ module top (
   ) sync_rst_i (
     .clk   (mclk),
     .rst   (0),
-    .sig_i (~FPGA_RST_N),
+    .sig_i (FPGA_RST),
     .sig_o (rst)
   );
 
@@ -95,17 +99,13 @@ module top (
 
   // heartbeat LEDs
   rgb_drv rgb_drv_l_i (
-    .clk  (FPGA_CLK_100),
-    .rst  (~FPGA_RST_N),
+    .clk  (FPGA_CLK_12),
+    .rst  (FPGA_RST),
     .mode (1),
-    .red  (RGB_L[0]),
-    .grn  (RGB_L[1]),
-    .blu  (RGB_L[2])
+    .red  (RGB[0]),
+    .grn  (RGB[1]),
+    .blu  (RGB[2])
   );
-
-  assign RGB_R[0] = 0;
-  assign RGB_R[1] = 0;
-  assign RGB_R[2] = ~RGB_L[2];
 
 
 endmodule

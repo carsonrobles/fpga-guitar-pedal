@@ -53,8 +53,8 @@
 # commented constraints can be used in the top level xdc 
 #----------------------------------------------------------------
 # Connect to input port when clock capable pin is selected for input
-create_clock -period 10.000 [get_ports clk_i]
-set_input_jitter [get_clocks -of_objects [get_ports clk_i]] 0.1
+create_clock -period 83.333 [get_ports clk_i]
+set_input_jitter [get_clocks -of_objects [get_ports clk_i]] 0.83333
 
 
 set_property PHASESHIFT_MODE WAVEFORM [get_cells -hierarchical *adv*]
