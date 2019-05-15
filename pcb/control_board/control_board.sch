@@ -86,7 +86,7 @@ U 1 1 5CC39945
 P 1250 3000
 F 0 "SW1" H 1250 3285 50  0000 C CNN
 F 1 "SW_Push" H 1250 3194 50  0000 C CNN
-F 2 "Connector_Wire:SolderWirePad_1x02_P7.62mm_Drill2.5mm" H 1250 3200 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x01_P2.54mm_Vertical" H 1250 3200 50  0001 C CNN
 F 3 "" H 1250 3200 50  0001 C CNN
 	1    1250 3000
 	1    0    0    -1  
@@ -271,7 +271,7 @@ U 1 1 5CC47DDD
 P 2950 3000
 F 0 "SW2" H 2950 3285 50  0000 C CNN
 F 1 "SW_Push" H 2950 3194 50  0000 C CNN
-F 2 "Connector_Wire:SolderWirePad_1x02_P7.62mm_Drill2.5mm" H 2950 3200 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x01_P2.54mm_Vertical" H 2950 3200 50  0001 C CNN
 F 3 "" H 2950 3200 50  0001 C CNN
 	1    2950 3000
 	1    0    0    -1  
@@ -431,7 +431,7 @@ U 1 1 5CC49912
 P 4500 3000
 F 0 "SW3" H 4500 3285 50  0000 C CNN
 F 1 "SW_Push" H 4500 3194 50  0000 C CNN
-F 2 "Connector_Wire:SolderWirePad_1x02_P7.62mm_Drill2.5mm" H 4500 3200 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x01_P2.54mm_Vertical" H 4500 3200 50  0001 C CNN
 F 3 "" H 4500 3200 50  0001 C CNN
 	1    4500 3000
 	1    0    0    -1  
@@ -611,7 +611,7 @@ U 1 1 5CC56FA4
 P 6100 3000
 F 0 "SW4" H 6100 3285 50  0000 C CNN
 F 1 "SW_Push" H 6100 3194 50  0000 C CNN
-F 2 "Connector_Wire:SolderWirePad_1x02_P7.62mm_Drill2.5mm" H 6100 3200 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x01_P2.54mm_Vertical" H 6100 3200 50  0001 C CNN
 F 3 "" H 6100 3200 50  0001 C CNN
 	1    6100 3000
 	1    0    0    -1  
@@ -767,7 +767,7 @@ U 1 1 5CC5A211
 P 7700 3000
 F 0 "SW5" H 7700 3285 50  0000 C CNN
 F 1 "SW_Push" H 7700 3194 50  0000 C CNN
-F 2 "Connector_Wire:SolderWirePad_1x02_P7.62mm_Drill2.5mm" H 7700 3200 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x01_P2.54mm_Vertical" H 7700 3200 50  0001 C CNN
 F 3 "" H 7700 3200 50  0001 C CNN
 	1    7700 3000
 	1    0    0    -1  
@@ -863,8 +863,6 @@ tremolo_intensity
 Text GLabel 7950 5550 2    50   Output ~ 0
 tremolo_speed
 Wire Wire Line
-	11250 1400 11350 1400
-Wire Wire Line
 	11250 2500 11350 2500
 Wire Wire Line
 	11250 2600 11350 2600
@@ -878,7 +876,6 @@ Wire Wire Line
 	12450 2700 12350 2700
 Wire Wire Line
 	12450 1600 12350 1600
-NoConn ~ 11250 1400
 $Comp
 L Connector:Barrel_Jack J1
 U 1 1 5CD2F713
@@ -1248,7 +1245,7 @@ U 1 1 5CD5AB06
 P 3250 1250
 F 0 "SW6" H 3250 1535 50  0000 C CNN
 F 1 "SW_Push" H 3250 1444 50  0000 C CNN
-F 2 "Connector_Wire:SolderWirePad_1x02_P7.62mm_Drill2.5mm" H 3250 1450 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x01_P2.54mm_Vertical" H 3250 1450 50  0001 C CNN
 F 3 "~" H 3250 1450 50  0001 C CNN
 	1    3250 1250
 	1    0    0    -1  
@@ -1527,4 +1524,10 @@ Wire Wire Line
 Wire Wire Line
 	11350 4200 11450 4200
 Connection ~ 11350 4200
+Wire Wire Line
+	10950 1300 10950 1400
+Wire Wire Line
+	10950 1400 11350 1400
+Text GLabel 10950 1300 1    50   Input ~ 0
+5V
 $EndSCHEMATC
