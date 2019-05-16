@@ -14,3 +14,6 @@ usage_statistics_webtalk.*
 *.hex
 fab/data
 .DS_Store
+*.bak
+*.net
+gerber
