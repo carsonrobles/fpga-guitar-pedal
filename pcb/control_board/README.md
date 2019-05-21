@@ -23,3 +23,15 @@ The FPGA is mounted onto the control board via 2 24 pin headers. The analog mux 
 ### Data Converter Module Connections
 ![Alt text](img/sch_data_converters.png?raw=true "Data Converter Module")
 The data converter module is also mounted to the control board via a Digilent PMOD header (2x6 pin header). This header is routed to I/O pins on the FPGA.
+
+### Front of Board Layout
+![Alt text](img/layout_front.png?raw=true "Layout Front")
+
+### Back of Board Layout
+![Alt text](img/layout_back.png?raw=true "Layout Back")
+
+### Front of Board Rendering
+![Alt text](img/render_front.png?raw=true "Render Front")
+
+### Back of Board Rendering
+![Alt text](img/render_back.png?raw=true "Render Back")
