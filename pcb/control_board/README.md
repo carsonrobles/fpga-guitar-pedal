@@ -6,3 +6,7 @@ The main function of this board is to hold all components of the project includi
 
 ### Status
 In fabrication.
+
+## Board Images
+### Schematic
+![Alt text](img/sch_power.png?raw=true "Title")
